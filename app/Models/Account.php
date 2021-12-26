@@ -46,31 +46,4 @@ class Account extends Model
     {
         return $this->hasOne(AccountSummary::class)->where('active', 1);
     }
-
-    // public function summedTradeBuyingOrders()
-    // {
-        // return $this->hasOne(TradeOrder::class, 'buyer_account_id')
-        //     ->select([
-        //         'buyer_account_id',
-        //         DB::raw('sum(quantity) as quantitytotal'),
-        //         DB::raw('sum(quantity * price + transaction_fee) as total')
-        //     ])
-        //     ->groupBy('buyer_account_id');
-    // }
-
-    // public function summedTradeSellingOrders()
-    // {
-        // return $this->hasOne(TradeOrder::class, 'seller_account_id')
-        //     ->select([
-        //         'seller_account_id',
-        //         DB::raw('sum(quantity) as quantitytotal'),
-        //         DB::raw('sum(quantity * price + transaction_fee) as total')
-        //     ])
-        //     ->groupBy('seller_account_id');
-    // }
-
-    // public function getlastPriceAttribute()
-    // {
-        // return Price::lastPrice($this->asset_id);
-    // }
 }
