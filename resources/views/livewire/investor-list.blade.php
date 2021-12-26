@@ -11,7 +11,7 @@
                         <div>
                             <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px"
                                 aria-label="Pagination">
-                                <button @if (is_null($prevDay)) disabled @else wire:click="changeDate('{{$prevDay->format('Y-m-d')}}')" @endif
+                                <button wire:click="changeDate('{{$prevDay->format('Y-m-d')}}')"
                                     class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-75">
                                     Önceki Gün
                                 </button>
@@ -21,7 +21,7 @@
                                     {{ $day->format('d.m.Y') }}
                                 </span>
 
-                                <button @if (is_null($nextDay)) disabled @else wire:click="changeDate('{{$nextDay->format('Y-m-d')}}')" @endif
+                                <button wire:click="changeDate('{{$nextDay->format('Y-m-d')}}')"
                                     class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50 disabled:opacity-75">
                                     Sonraki Gün
                                 </button>
@@ -73,6 +73,9 @@
                     </thead>
                     <tbody class="bg-white divide-y divide-gray-200">
                         @foreach ($investors as $investor)
+                            @if (!isset($investor->summary))
+                                @continue
+                            @endif
                             @php
                                 $profitTl = $investor->summary->amount_tl - $investor->summary->cost_tl;
                                 $profitPercentTl = $investor->summary->cost_tl > 0 ? ($profitTl / $investor->summary->cost_tl) * 100 : 0;

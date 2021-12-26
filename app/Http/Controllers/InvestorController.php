@@ -15,17 +15,9 @@ class InvestorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        // $investors = $request->user()->investors()
-        //     ->with(['summary'])
-        //     ->get();
-
-        return view('pages.investors.index'
-            // , [
-            //     'investors' => $investors
-            // ]
-        );
+        return view('pages.investors.index');
     }
 
     /**

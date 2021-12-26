@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\InvestorSummary;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Livewire\Component;
@@ -14,39 +15,33 @@ class InvestorList extends Component
     public $nextDay = null;
     public $prevDay = null;
 
-    public function mount(Request $request)
+    public function mount()
     {
         $this->day = now();
         $this->prevDay = now()->subDay();
+        $this->nextDay = now();
 
-        $this->investors = $request->user()->investors()
+        $this->investors = auth()->user()->investors()
             ->with(['summary'])
             ->get();
     }
 
     public function changeDate($day)
     {
-        // $this->investors = request()->user()->investors()
-        //     ->with(['summary'])
-        //     // ->where('id', 2)
-        //     // ->with(['summary' => function ($query) use ($day) {
-        //     //     $query->orWhere('investor_id', 1);
-        //     // }])
-        //     ->get();
-
-        // dd($this->investors);
-
-        $this->day = Carbon::createFromFormat('Y-m-d', $day); //now()->subDay();
-        // dump($this->day);
+        $this->investors = auth()->user()->investors;
+        $this->day = Carbon::createFromFormat('Y-m-d', $day);
         $this->prevDay = $this->day->copy()->subDay();
-        // dump($this->day);
         $this->nextDay = $this->day->copy()->addDay();
-        // dump($this->day);
-        // $this->day = $this->investors->first()->summary->created_at;
-        // $this->prevDay = $this->day->subDay();
-        // $this->nextDay = $this->day->addDay();
 
-        // $this->reset('investors');
+        $summaries = InvestorSummary::whereDate('created_at', $this->day->format('Y-m-d'))
+            ->whereIn('investor_id', $this->investors->pluck('id')->all())
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+        foreach ($this->investors as $investor) {
+            $summary = $summaries->where('investor_id', $investor->id)->first();
+            $investor->setRelation('summary', $summary);
+        }
     }
 
     public function render()
