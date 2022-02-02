@@ -24,7 +24,8 @@ Route::get('/', function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
-        return view('dashboard');
+        // return view('dashboard');
+        return redirect('/investors');
     })->name('dashboard');
 
     Route::resource('assets', AssetController::class);

@@ -268,11 +268,9 @@ class SetSummaries implements ShouldQueue
 
     private function assetPriceOnDate($assetId, $date)
     {
-        return Cache::remember('price.' . $assetId . '.' . $date, now()->addDay(), function () use ($assetId, $date) {
-            return Price::where('asset_id', $assetId)
-                ->where('created_at', '>=', $date)
-                ->oldest()
-                ->first();
-        });
+        return Price::where('asset_id', $assetId)
+            ->where('created_at', '>=', $date)
+            ->oldest()
+            ->first();
     }
 }

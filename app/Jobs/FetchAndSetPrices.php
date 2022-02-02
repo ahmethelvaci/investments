@@ -7,6 +7,7 @@ use App\Models\Price;
 use FluentDOM;
 use FluentDOM\Loader\Options;
 use GuzzleHttp\Client;
+use GuzzleHttp\Cookie\FileCookieJar;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
@@ -83,12 +84,31 @@ class FetchAndSetPrices
             throw new Exception('web adresi boş', 1);
         }
 
+        if (Str::startsWith($asset->web_address, 'https://www.tefas.gov.tr')) {
+            $cookieJar = new FileCookieJar('/home/ahmet/.cookie-tefas.txt', TRUE);
+        } else {
+            $cookieJar = new FileCookieJar('/home/ahmet/.cookie-other.txt', TRUE);
+        }
         $client = new Client();
         $res = $client->request('GET', $asset->web_address, [
             'headers' => [
-                'User-Agent' => 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36',
-                'Accept'     => 'text/html',
+                'User-Agent' => 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/97.0.4692.71 Safari/537.36/Ot0vbCKM-54',
+                'Connection'     => 'keep-alive',
+                'Pragma'     => 'no-cache',
+                'Cache-Control'     => 'no-cache',
+                'sec-ch-ua' => "",
+                'sec-ch-ua-mobile' => "?0",
+                'sec-ch-ua-platform' => "",
+                'Upgrade-Insecure-Requests' => "1",
+                'Sec-Fetch-Site' => "none",
+                'Sec-Fetch-Mode' => "navigate",
+                'Sec-Fetch-User' => "?1",
+                'Sec-Fetch-Dest' => "document",
+                'Accept-Encoding' => "gzip, deflate, br",
+                'Accept-Language' => "tr",
+                'Accept'     => 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
             ],
+            'cookies' => $cookieJar,
         ]);
 
         if ($res->getStatusCode() == 200) {

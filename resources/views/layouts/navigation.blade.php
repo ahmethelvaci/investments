@@ -29,11 +29,11 @@
                     </x-nav-link>
                 </div>
 
-                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
                     <x-nav-link :href="route('prices.index')" :active="request()->routeIs('prices.*')">
                         {{ __('Prices') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Settings Dropdown -->
@@ -104,9 +104,9 @@
                 {{ __('Assets') }}
             </x-responsive-nav-link>
 
-            <x-responsive-nav-link :href="route('prices.index')" :active="request()->routeIs('prices.*')">
+            {{-- <x-responsive-nav-link :href="route('prices.index')" :active="request()->routeIs('prices.*')">
                 {{ __('Prices') }}
-            </x-responsive-nav-link>
+            </x-responsive-nav-link> --}}
         </div>
 
         <!-- Responsive Settings Options -->

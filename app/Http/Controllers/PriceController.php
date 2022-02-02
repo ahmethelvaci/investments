@@ -7,6 +7,7 @@ use App\Http\Requests\UpdatePriceRequest;
 use App\Jobs\FetchAndSetPrices;
 use App\Jobs\SetInvestorSummaries;
 use App\Jobs\SetSummaries;
+use App\Models\Asset;
 use App\Models\Price;
 
 class PriceController extends Controller
@@ -32,6 +33,7 @@ class PriceController extends Controller
         // SetSummaries::dispatchSync(Price::lastPrice(11));
         // SetSummaries::dispatchSync(Price::lastPrice(12));
         // SetSummaries::dispatchSync(Price::lastPrice(13));
+        // SetSummaries::dispatchSync(Price::lastPrice(14));
         // SetInvestorSummaries::dispatchSync();
         /*
         SELECT `p1`.*
@@ -42,7 +44,7 @@ class PriceController extends Controller
             WHERE `created_at` <= '2021-11-28 23:59:59'
             GROUP BY `asset_id`
         ) p2 ON `p1`.`asset_id` = `p2`.`asset_id` AND `p1`.`created_at` = `p2`.`created_at` */
-        // dispatch(new FetchAndSetPrices);
+        // FetchAndSetPrices::dispatchSync(Asset::find(14));
         return view('pages.prices.index');
     }
 

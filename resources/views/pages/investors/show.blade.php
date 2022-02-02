@@ -97,7 +97,7 @@
                                                         <br>
                                                         {{ number_format($account->summary->price_tl, 6) }} TL
                                                         <br>
-                                                        {{ number_format($account->summary->cost_tl / $account->summary->quantity, 6) }} TL
+                                                        {{ number_format($account->summary->quantity > 0 ? $account->summary->cost_tl / $account->summary->quantity : 0, 6) }} TL
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
@@ -157,7 +157,7 @@
                                                         <br>
                                                         {{ number_format($account->summary->price_usd, 6) }} $
                                                         <br>
-                                                        {{ number_format($account->summary->cost_usd / $account->summary->quantity, 6) }} $
+                                                        {{ number_format($account->summary->quantity > 0 ? $account->summary->cost_usd / $account->summary->quantity : 0, 6) }} $
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
