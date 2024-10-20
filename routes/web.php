@@ -5,7 +5,6 @@ use App\Http\Controllers\AssetController;
 use App\Http\Controllers\InvestorController;
 use App\Http\Controllers\PriceController;
 use Illuminate\Support\Facades\Route;
-use TCG\Voyager\Facades\Voyager;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,7 +34,3 @@ Route::middleware(['auth'])->group(function () {
 });
 
 require __DIR__.'/auth.php';
-
-Route::group(['prefix' => 'admin'], function () {
-    Voyager::routes();
-});
