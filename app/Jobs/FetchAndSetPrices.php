@@ -58,9 +58,10 @@ class FetchAndSetPrices
             } catch (\Throwable $th) {
                 Log::warning(
                     $th->getMessage() . " " . $th->getFile() . ":" .
-                    $th->getLine() . "\n" . print_r($th->getTrace(), 1),
-                    $asset->toArray()
+                    $th->getLine() . "\n" . $th->getTraceAsString()
                 );
+
+                throw $th;
             }
             sleep(5);
         }
@@ -69,7 +70,7 @@ class FetchAndSetPrices
     public function setAsset(Asset $asset)
     {
         $this->setHtml($asset);
-        // dump($this->formatPrice($asset, $this->getPrice($asset)));
+        
         $newPrice = new Price();
         $newPrice->asset_id = $asset->id;
         $newPrice->price = $this->formatPrice($asset, $this->getPrice($asset));
@@ -141,6 +142,7 @@ class FetchAndSetPrices
             return floatval(Str::replace(',', '.', $price));
         } else if (
             Str::startsWith($asset->web_address, 'https://bigpara.hurriyet.com.tr') ||
+            Str::startsWith($asset->web_address, 'https://www.doviz.com') ||
             Str::startsWith($asset->web_address, 'https://www.kuveytturk.com.tr')
         ) {
             $price = Str::replace('.', '', $price);

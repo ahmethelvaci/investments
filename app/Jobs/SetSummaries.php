@@ -95,7 +95,7 @@ class SetSummaries implements ShouldQueue
         $amount_tl = 0.0;
         $amount_usd = 0.0;
         $price_tl = Price::lastPrice($asset->id)->price;
-        $price_usd = (Price::lastPrice($asset->id)->price / Price::lastPrice(10)->price);
+        $price_usd = (Price::lastPrice($asset->id)->price / Price::lastPrice(1)->price);
         $cost_tl = 0.0;
         $cost_usd = 0.0;
 
@@ -255,7 +255,7 @@ class SetSummaries implements ShouldQueue
         }
 
         $usdPrice = Cache::rememberForever('usd_price.' . $date, function () use ($date) {
-            return Price::where('asset_id', 10)
+            return Price::where('asset_id', 1)
                 ->where('created_at', '>=', $date)
                 ->oldest()
                 ->first();

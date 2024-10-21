@@ -41,6 +41,8 @@ class SetInvestorSummaries implements ShouldQueue
                 $th->getMessage() . " " . $th->getFile() . ":" .
                 $th->getLine() . "\n" . $th->getTraceAsString()
             );
+
+            throw $th;
         }
     }
 
