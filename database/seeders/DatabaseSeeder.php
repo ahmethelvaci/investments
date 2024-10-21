@@ -26,6 +26,6 @@ class DatabaseSeeder extends Seeder
             TradeOrderSeeder::class,
         ]);
 
-        FetchAndSetPrices::dispatchSync();
+        FetchAndSetPrices::dispatchSync(null, true);
     }
 }

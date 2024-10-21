@@ -19,14 +19,17 @@ class FetchAndSetPrices
 
     protected $asset;
 
+    protected $offline = false;
+
     /**
      * Create a new job instance.
      *
      * @return void
      */
-    public function __construct(Asset $asset = null)
+    public function __construct(Asset $asset = null, bool $offline = false)
     {
         $this->asset = $asset;
+        $this->offline = $offline;
     }
 
     /**
@@ -81,6 +84,10 @@ class FetchAndSetPrices
 
     private function setHtml(Asset $asset)
     {
+        if ($this->offline === true) {
+            return ;
+        }
+
         if (is_null($asset->web_address) || $asset->web_address == '') {
             throw new Exception('web adresi boş', 1);
         }
@@ -126,6 +133,13 @@ class FetchAndSetPrices
 
     private function getPrice(Asset $asset)
     {
+        if ($this->offline === true) {
+            if ($asset->name === 'Gram Altın') {
+                return '3.010,0';
+            }
+            return '1';
+        }
+
         $htmlText = (string) $this->getHtml($asset);
 
         $document = FluentDOM::load($htmlText, 'html', [Options::ALLOW_FILE => TRUE]);
