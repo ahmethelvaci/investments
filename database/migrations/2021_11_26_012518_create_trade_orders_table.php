@@ -18,8 +18,8 @@ class CreateTradeOrdersTable extends Migration
             $table->foreignId('seller_account_id')->nullable()->constrained('accounts');
             $table->foreignId('buyer_account_id')->nullable()->constrained('accounts');
             $table->bigInteger('quantity');
-            $table->unsignedDecimal('price', 20, 8);
-            $table->unsignedDecimal('transaction_fee', 20, 8)->default(0);
+            $table->decimal('price', 20, 8);
+            $table->decimal('transaction_fee', 20, 8)->default(0);
             $table->timestamps();
         });
     }

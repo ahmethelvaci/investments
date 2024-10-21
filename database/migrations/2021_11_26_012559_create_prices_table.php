@@ -16,7 +16,7 @@ class CreatePricesTable extends Migration
         Schema::create('prices', function (Blueprint $table) {
             $table->id();
             $table->foreignId('asset_id')->constrained();
-            $table->unsignedDecimal('price', 20, 8);
+            $table->decimal('price', 20, 8);
             $table->timestamps();
         });
     }
