@@ -14,7 +14,10 @@ class AccountFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'investor_id' => 1,
+            'asset_id' => 2,
+            'name' => $this->faker->name(),
+            'quantity' => 1,
         ];
     }
 }

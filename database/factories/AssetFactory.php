@@ -14,7 +14,10 @@ class AssetFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'user_id' => 1,
+            'name' => 'Dolar',
+            'web_address' => 'https://www.doviz.com',
+            'price_control' => '/html/body/header/div[2]/div/div[1]/div[2]/a/span[2]',
         ];
     }
 }
